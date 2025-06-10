@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Генератор слов для изучения иностранных языков</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="logo">Fluentify</div>
+            <ul class="nav-links">
+                <li><a href='c:\сайты\individual project main.html'><i class="fas fa-home"></i> Главная</a></li>
+                <li class="active"><a href='c:\сайты\individual project\individual project generator.html'><i class="fas fa-random"></i> Генератор</a></li>
+                <li><a href="about.html"><i class="fas fa-info-circle"></i> О сайте</a></li>
+            </ul>
+            <div class="nav-burger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <header>
+            <h1 id="language-title">Генератор английских слов</h1>
+            <p class="description">Нажмите на кнопку, чтобы получить случайное слово с переводом и определением</p>
+            <div class="language-tabs">
+                <button class="lang-tab active" data-lang="english">Английский</button>
+                <button class="lang-tab" data-lang="german">Немецкий</button>
+            </div>
+        </header>
+        
+        <div class="word-card">
+            <div id="word-display">
+                <p>Нажмите кнопку "Получить слово", чтобы начать</p>
+            </div>
+        </div>
+        
+        <div class="button-container">
+            <button id="generate-btn">Получить слово</button>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <p>Сайт для изучения иностранных слов.</p>
+            <p><i class="fas fa-envelope"></i> Isidioe368@gmail.com</p>
+        </div>
+    </footer>
+
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Monsieur+La+Doulaise&family=Roboto:wght@300;400;500;700&display=swap');
+    
+    :root {
+        --primary-color: #534f83;
+        --secondary-color: #938eaa;
+        --german-color: #d17b46;
+        --text-color: #2c3e50;
+        --light-text: #7f8c8d;
+        --background: #ffffff;
+        --card-bg: white;
+        --nav-bg: #534f83;
+        --nav-text: white;
+        --nav-hover: #6a659a;
+        --nav-active: #3a3658;
+    }
+    
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+    
+    html {
+        scroll-behavior: smooth;
+    }
+    
+    body {
+        font-family: 'Roboto', sans-serif;
+        line-height: 1.6;
+        color: var(--text-color);
+        background-color: var(--background);
+        padding: 0;
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    nav {
+        background-color: var(--nav-bg);
+        color: var(--nav-text);
+        padding: 0.8rem 1rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+    
+    .nav-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+    
+    .logo {
+        font-family: 'Great Vibes', cursive;
+        font-size: clamp(1.5rem, 5vw, 1.8rem);
+        font-weight: bold;
+        color: white;
+        white-space: nowrap;
+    }
+    
+    .nav-links {
+        display: flex;
+        list-style: none;
+    }
+    
+    .nav-links li {
+        margin-left: clamp(1rem, 2vw, 2rem);
+        position: relative;
+    }
+    
+    .nav-links a {
+        color: var(--nav-text);
+        text-decoration: none;
+        font-weight: 500;
+        font-size: clamp(0.9rem, 2vw, 1rem);
+        display: flex;
+        align-items: center;
+        transition: all 0.3s ease;
+        padding: 0.5rem 0;
+        white-space: nowrap;
+    }
+    
+    .nav-links a i {
+        margin-right: 0.5rem;
+        font-size: clamp(1rem, 2vw, 1.1rem);
+    }
+    
+    .nav-links li:hover a {
+        color: #d1d1ff;
+    }
+    
+    .nav-links li.active a {
+        color: white;
+        font-weight: 600;
+    }
+    
+    .nav-links li.active::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background-color: white;
+        border-radius: 3px 3px 0 0;
+    }
+    
+    .nav-burger {
+        display: none;
+        cursor: pointer;
+        font-size: 1.5rem;
+        color: white;
+    }
+    
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 1rem;
+        width: 100%;
+        flex: 1;
+    }
+    
+    header {
+        text-align: center;
+        padding: 1rem 0;
+        margin-top: 0.5rem;
+    }
+    
+    h1 {
+        font-family: 'Great Vibes', cursive;
+        font-size: clamp(1.8rem, 5vw, 2.5rem);
+        color: var(--primary-color);
+        margin-bottom: 0.5rem;
+        line-height: 1.2;
+    }
+    
+    .description {
+        font-size: clamp(1rem, 2.5vw, 1.1rem);
+        color: var(--light-text);
+        margin-bottom: 1rem;
+    }
+    
+    .word-card {
+        background-color: var(--card-bg);
+        border-radius: 10px;
+        padding: clamp(1rem, 3vw, 1.5rem);
+        margin: 1rem 0;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        min-height: 150px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition: all 0.3s ease;
+    }
+    
+    #word-display {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .english-word {
+        font-size: clamp(1.5rem, 5vw, 2rem);
+        font-weight: bold;
+        color: var(--primary-color);
+        margin-bottom: 0.8rem;
+        word-break: break-word;
+    }
+    
+    .german-word {
+        font-size: clamp(1.5rem, 5vw, 2rem);
+        font-weight: bold;
+        color: var(--german-color);
+        margin-bottom: 0.8rem;
+        word-break: break-word;
+    }
+    
+    .translation {
+        font-size: clamp(1.2rem, 4vw, 1.5rem);
+        color: var(--secondary-color);
+        margin-bottom: 0.8rem;
+    }
+    
+    .definition {
+        font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+        color: var(--light-text);
+        font-style: italic;
+        line-height: 1.6;
+        padding: 0 0.5rem;
+    }
+    
+    .button-container {
+        text-align: center;
+        margin: 1.5rem 0;
+    }
+    
+    #generate-btn {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        padding: clamp(0.8rem, 2vw, 0.9rem) clamp(1.5rem, 4vw, 1.8rem);
+        font-size: clamp(1rem, 2.5vw, 1.1rem);
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s;
+        box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+        min-width: 180px;
+    }
+    
+    #generate-btn:hover {
+        background-color: #6a659a;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(52, 152, 219, 0.4);
+    }
+    
+    #generate-btn:active {
+        transform: translateY(0);
+    }
+    
+    .language-tabs {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    
+    .lang-tab {
+        padding: 0.5rem clamp(1rem, 3vw, 1.2rem);
+        border: none;
+        background: none;
+        font-size: clamp(0.9rem, 2vw, 1rem);
+        cursor: pointer;
+        position: relative;
+        color: var(--light-text);
+        transition: all 0.3s;
+        white-space: nowrap;
+    }
+    
+    .lang-tab.active {
+        color: var(--text-color);
+        font-weight: 500;
+    }
+    
+    .lang-tab.active::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: var(--primary-color);
+    }
+    
+    .lang-tab[data-lang="german"].active::after {
+        background-color: var(--german-color);
+    }
+    
+    footer {
+        text-align: center;
+        padding: 1rem;
+        font-size: 0.9rem;
+        color: var(--light-text);
+        border-top: 1px solid #eee;
+        background-color: #f9f9f9;
+        width: 100%;
+    }
+    
+    .footer-content {
+        max-width: 800px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    footer i {
+        margin-right: 0.5rem;
+        color: var(--primary-color);
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .fade-in {
+        animation: fadeIn 0.5s ease-out;
+    }
+    
+    @media (max-width: 768px) {
+        nav {
+            padding: 0.8rem 1rem;
+        }
+        
+        .nav-links {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: var(--nav-bg);
+            flex-direction: column;
+            padding: 0;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-links.show {
+            display: flex;
+        }
+        
+        .nav-links li {
+            margin: 0;
+            padding: 0.8rem 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .nav-links li.active::after {
+            display: none;
+        }
+        
+        .nav-burger {
+            display: block;
+        }
+        
+        .word-card {
+            min-height: 120px;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .language-tabs {
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .word-card {
+            padding: 1rem;
+        }
+        
+        #generate-btn {
+            width: 100%;
+            max-width: 280px;
+        }
+    }
+    </style>
+
+    <script>
+    const englishWords = [
+        {
+            word: "Serendipity",
+            translation: "Серендипность",
+            definition: "Способность делать удачные открытия случайно"
+        },
+        {
+            word: "Ephemeral",
+            translation: "Эфемерный",
+            definition: "Кратковременный, мимолетный"
+        },
+        {
+            word: "Quintessential",
+            translation: "Квинтэссенция",
+            definition: "Самый типичный или важный пример чего-либо"
+        },
+        {
+            word: "Eternity",
+            translation: "Вечность",
+            definition: "Что-то бесконечное, незаканчиваемое"
+        },
+        {
+            word: "Petrichor",
+            translation: "Запах земли после дождя",
+            definition: "Приятный аромат, который возникает, когда дождь падает на сухую почву"
+        },
+        {
+            word: "Sonder",
+            translation: "Осознание сложности жизни других",
+            definition: "Чувство, что у каждого человека есть своя история"
+        },
+        {
+            word: "Mellifluous",
+            translation: "Мелодичный",
+            definition: "Приятный на слух, как журчание ручья"
+        },
+        {
+            word: "Limerence",
+            translation: "Навязчивое влечение",
+            definition: "Состояние одержимости кем-то"
+        },
+        {
+            word: "Solivagant",
+            translation: "Одинокий странник",
+            definition: "Тот, кто любит бродить в одиночестве"
+        },
+        {
+            word: "Ineffable",
+            translation: "Невыразимый",
+            definition: "То, что невозможно описать словами"
+        },
+        {
+            word: "Nefelibata",
+            translation: "Мечтатель",
+            definition: "Тот, кто ходит в облаках"
+        },
+        {
+            word: "Vellichor",
+            translation: "Запах старых книг",
+            definition: "Аромат в букинистических магазинах"
+        },
+        {
+            word: "Aurora",
+            translation: "Полярное сияние",
+            definition: "Природное световое явление в небе"
+        },
+        {
+            word: "Bumblebee",
+            translation: "Шмель",
+            definition: "Большая пушистая пчела"
+        },
+        {
+            word: "Cascade",
+            translation: "Каскад",
+            definition: "Небольшой водопад или серия водопадов"
+        },
+        {
+            word: "Dalliance",
+            translation: "Минутное увлечение",
+            definition: "Кратковременный роман без серьезных намерений"
+        },
+        {
+            word: "Effervescent",
+            translation: "Искрящийся",
+            definition: "Полный энергии и энтузиазма"
+        },
+        {
+            word: "Gossamer",
+            translation: "Паутинка",
+            definition: "Что-то очень легкое, тонкое и нежное"
+        },
+        {
+            word: "Halcyon",
+            translation: "Безмятежный",
+            definition: "Спокойный и мирный период времени"
+        },
+        {
+            word: "Ineffable",
+            translation: "Невыразимый",
+            definition: "Слишком прекрасный, чтобы описать словами"
+        }
+    ];
+
+    const germanWords = [
+        {
+            word: "Schadenfreude",
+            translation: "Злорадство",
+            definition: "Удовольствие от неудач других людей"
+        },
+        {
+            word: "Fernweh",
+            translation: "Тоска по дальним странам",
+            definition: "Желание путешествовать, тоска по новым местам"
+        },
+        {
+            word: "Gemütlichkeit",
+            translation: "Уют",
+            definition: "Чувство комфорта, тепла и хорошего настроения"
+        },
+        {
+            word: "Weltschmerz",
+            translation: "Мировая скорбь",
+            definition: "Чувство печали от несовершенства мира"
+        },
+        {
+            word: "Sehnsucht",
+            translation: "Тоска",
+            definition: "Глубокая эмоциональная тоска по чему-то"
+        },
+        {
+            word: "Waldeinsamkeit",
+            translation: "Лесное одиночество",
+            definition: "Чувство умиротворения среди деревьев"
+        },
+        {
+            word: "Schattenparker",
+            translation: "Тот, кто паркуется в тени",
+            definition: "Человек, избегающий трудностей"
+        },
+        {
+            word: "Drachenfutter",
+            translation: "Корм для дракона",
+            definition: "Подарок для смягчения гнева"
+        },
+        {
+            word: "Treppenwitz",
+            translation: "Лестничный ум",
+            definition: "Остроумная реплика, пришедшая слишком поздно"
+        },
+        {
+            word: "Fremdschämen",
+            translation: "Чувство стыда за других",
+            definition: "Смущение за чужое неловкое поведение"
+        },
+        {
+            word: "Lebensmüde",
+            translation: "Усталость от жизни",
+            definition: "Состояние безрассудного риска"
+        },
+        {
+            word: "Kopfkino",
+            translation: "Кино в голове",
+            definition: "Яркие фантазии в воображении"
+        },
+        {
+            word: "Luftschloss",
+            translation: "Воздушный замок",
+            definition: "Маловероятные мечты"
+        },
+        {
+            word: "Torschlusspanik",
+            translation: "Страх упущенных возможностей",
+            definition: "Боязнь, что время уходит"
+        },
+        {
+            word: "Backpfeifengesicht",
+            translation: "Лицо, просящее подзатыльника",
+            definition: "Лицо, которое хочется ударить"
+        },
+        {
+            word: "Fingerspitzengefühl",
+            translation: "Тактичность",
+            definition: "Умение вести себя деликатно"
+        },
+        {
+            word: "Geborgenheit",
+            translation: "Чувство защищенности",
+            definition: "Ощущение безопасности и комфорта"
+        },
+        {
+            word: "Kummerspeck",
+            translation: "Грустный жирок",
+            definition: "Вес, набранный от переедания из-за стресса"
+        },
+        {
+            word: "Ohrwurm",
+            translation: "Ушной червь",
+            definition: "Навязчивая мелодия, которая крутится в голове"
+        },
+        {
+            word: "Schnapsidee",
+            translation: "Пьяная идея",
+            definition: "Глупая мысль, пришедшая в состоянии опьянения"
+        }
+    ];
+
+        const generateBtn = document.getElementById('generate-btn');
+        const wordDisplay = document.getElementById('word-display');
+        const navBurger = document.querySelector('.nav-burger');
+        const navLinks = document.querySelector('.nav-links');
+        const langTabs = document.querySelectorAll('.lang-tab');
+        const languageTitle = document.getElementById('language-title');
+        
+        let currentLanguage = 'english';
+        
+        generateBtn.addEventListener('click', generateWord);
+        
+        langTabs.forEach(tab => {
+            tab.addEventListener('click', switchLanguage);
+        });
+        
+        navBurger.addEventListener('click', function() {
+            navLinks.classList.toggle('show');
+        });
+        
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', function() {
+                if (window.innerWidth <= 768) {
+                    navLinks.classList.remove('show');
+                }
+            });
+        });
+        
+        function generateWord() {
+            let randomWord;
+            const wordClass = `${currentLanguage}-word`;
+            
+            if (currentLanguage === 'english') {
+                randomWord = englishWords[Math.floor(Math.random() * englishWords.length)];
+            } else {
+                randomWord = germanWords[Math.floor(Math.random() * germanWords.length)];
+            }
+            
+            const wordHTML = `
+                <div class="${wordClass} fade-in">${randomWord.word}</div>
+                <div class="translation fade-in">${randomWord.translation}</div>
+                <div class="definition fade-in">${randomWord.definition}</div>
+            `;
+            
+            animateWordDisplay(wordHTML);
+        }
+        
+        function switchLanguage(e) {
+            const lang = e.target.dataset.lang;
+            currentLanguage = lang;
+            
+            langTabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+            e.target.classList.add('active');
+            
+            languageTitle.textContent = lang === 'english' 
+                ? 'Генератор английских слов' 
+                : 'Генератор немецких слов';
+            
+            wordDisplay.innerHTML = '<p>Нажмите кнопку "Получить слово", чтобы начать</p>';
+        }
+        
+        function animateWordDisplay(content) {
+            wordDisplay.classList.remove('fade-in');
+            void wordDisplay.offsetWidth;
+            wordDisplay.classList.add('fade-in');
+            wordDisplay.innerHTML = content;
+        }
+    </script>
+</body>
+</html>
